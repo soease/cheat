@@ -1,0 +1,14 @@
+{
+    "highlight": true,
+    "linewrap": 79,
+    "cheatdirs": [
+        "cheatsheets"
+    ],
+    "editor": "vim",
+    "language": "zh",
+    "webport": "9999",
+    "appid": "wx693eacb59000000",
+    "appsecret": "5a4f84a7cb4fce7000000",
+    "token": "0000000",
+    "encoding": "0000000000000000000"
+}
