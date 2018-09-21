@@ -440,14 +440,16 @@ func listCheat(path string, web bool) (ret string) {
 	}
 	files, _ := ioutil.ReadDir(path)
 	for _, f := range files {
-		ret = ret + newline + f.Name()
+		if strings.HasPrefix(f.Name(), ".") == false {
+			ret = ret + newline + f.Name()
+		}
 	}
 	return ret
 }
 
 // ---- Web服务 ---------------------------------------------------------
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	var web bool
+	var web bool //是否为web访问
 	var Lang string
 	var ret string
 
@@ -473,7 +475,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var cmdname = r.URL.Path[1:len(r.URL.Path)] //取消Web请求中的第一个划线符号
 	if r.URL.Path == "/" {                      //未进行查询则显示说明文件
-		cmdname = "README.md"
+		cmdname = ".readme.md"
 	} else if cmdname == "favicon.ico" { //网站访问取图标，不关注
 		return
 	} else if strings.HasPrefix(cmdname, "pic/") { //访问图片
@@ -482,6 +484,14 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if len(r.Form["flag"]) > 0 {
+		if r.Form["flag"][0] == "wx" { //微信访问
+			web = false
+		}
+	}
+	debug(fmt.Sprintf("url: %s, key: %s, web: %t", r.URL.Path, cmdname, web))
+	debug(r.Header)
+
 	//网站功能
 	if strings.HasPrefix(cmdname, "down") { //打包下载通用小抄
 		zipfile := zipCheat(config.Cheatdirs[0])
@@ -489,7 +499,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, zipfile)
 		return
 	} else if strings.HasPrefix(cmdname, "list") { //小抄列表
-		if len(strings.Split(cmdname, "/")) == 0 { //二级目录列表
+		debug(len(strings.Split(cmdname, "/")))
+		if len(strings.Split(cmdname, "/")) == 1 { //二级目录列表
 			ret = listCheat(config.Cheatdirs[0], web)
 		} else {
 			ret = listCheat(filepath.Join(config.Cheatdirs[0], strings.Split(cmdname, "/")[1]), web)
@@ -500,8 +511,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	} else if strings.HasPrefix(cmdname, "pup") { //私人小抄上传
 		return
-	} else if strings.HasPrefix(cmdname, "login") { //
-		cmdname = "WeiXin.txt"
+	} else if strings.HasPrefix(cmdname, "login") { //登陆，返回说明信息
+		cmdname = ".weixin"
 		ret, _ = allCheats(cmdname, show_text_without_style)
 	} else if strings.HasPrefix(cmdname, "book") { //留言功能
 
@@ -510,7 +521,14 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		ret, _ = allCheats(r.Form["key"][0], show_text_without_style)
 		cmdname = cmdname + ": " + r.Form["key"][0]
 	} else {
-		ret, _ = allCheats(cmdname, show_web_style)
+		if web {
+			ret, _ = allCheats(cmdname, show_web_style)
+		} else {
+			ret, _ = allCheats(cmdname, show_cli_with_style)
+		}
+
+	}
+	if web {
 		ret = "<html>" + ret + "</html>"
 	}
 	fmt.Fprintln(w, ret)

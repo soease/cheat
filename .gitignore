@@ -6,6 +6,9 @@
 *.dylib
 cheat
 WeiXin
+.cheatrc
+cheat_linux_386
+
 # Test binary, build with `go test -c`
 *.test
 
