@@ -1,0 +1,62 @@
+# 提取未压缩的文件
+tar -xvf /path/to/foo.tar
+
+# 创建未压缩文件
+tar -cvf /path/to/foo.tar /path/to/foo/
+
+# 提取.gz文件
+tar -xzvf /path/to/foo.tgz
+
+# 创建.gz文件
+tar -czvf /path/to/foo.tgz /path/to/foo/
+
+# 列出.gz文件中的内容
+tar -ztvf /path/to/foo.tgz
+
+# 提取.bz2文件
+tar -xjvf /path/to/foo.tgz
+
+# 创建.bz2文件
+tar -cjvf /path/to/foo.tgz /path/to/foo/
+
+# 提取.tar文件到指定目录 
+tar -xvf /path/to/foo.tar -C /path/to/destination/
+
+# 列出.bz2文件内容
+tar -jtvf /path/to/foo.tgz
+
+# 创建.gz文件，排除所有jpg,gif....
+tar czvf /path/to/foo.tgz --exclude=\*.{jpg,gif,png,wmv,flv,tar.gz,zip} /path/to/foo/
+
+# 使用并行（多线程）实现压缩算法
+tar -z ... -> tar -Ipigz ...
+tar -j ... -> tar -Ipbzip2 ...
+tar -J ... -> tar -Ipixz ...
+
+#打包
+tar -cvf [目标文件名].tar [原文件名/目录名]
+#解包
+tar -xvf [原文件名].tar
+
+#压缩
+gzip [原文件名].tar
+#解压
+gunzip [原文件名].tar.gz
+
+#打包并压缩
+tar -zcvf [目标文件名].tar.gz [原文件名/目录名]
+#解压并解包
+tar -zxvf [原文件名].tar.gz
+
+#打包并压缩
+tar -jcvf [目标文件名].tar.bz2 [原文件名/目录名]
+#解压并解包
+tar -jxvf [原文件名].tar.bz2
+
+#打包并压缩
+tar -Jcvf [目标文件名].tar.xz [原文件名/目录名]
+#解压并解包
+tar -Jxvf [原文件名].tar.xz
+
+#解压 
+xz -d ....xz

@@ -1,0 +1,120 @@
+# 这里是记录我的Linux学习的相关知识点,将会随着学习的过程变化
+
+# 目录将带/符
+ls -F 
+
+# 查看文件类型
+file
+
+# 压缩可执行文件
+gzexe 
+
+# curl使用
+-A --user-agent   设置代理
+-b --cookie       cookie字符串或文件读取位置
+-c --cookie-jar   操作结束后把cookie写入文件
+-C --continue-at  断点续传
+-D --dump-header  所header信息写入文件
+-e --referer      来源网址
+-f --fail         连接失败时不显示http错误
+-o --output       把输出写到文件
+-O --remote-name  把输出写到文件，保留远程文件名
+-r --range        检索来自HTTP/1.1或FTP服务器字节范围
+-s --silent       静音模式，不输出任何东西
+-T --upload-file  上传文件
+-u --user         设置服务器的用户和密码
+-w --write-out
+-x --proxy        在给定的端口上使用HTTP代理
+-# --progress-bar 进度条显示当前传送状态
+
+    curl http://www.linux.com   获取网址页面内容
+    curl http://www.linux.com >> linux.html    获取页面，保存内容到文件
+    curl -o linux.html http://www.linux.com    获取页面，保存内容到文件
+    curl -O http://www.linux.com/hello.sh      获取指定文件
+    curl -o /dev/null -s -w %{http_code} www.linux.com  测试网页返回值（例如301 200） 
+    curl -c cookiec.txt http://www.linux.com   保存http的response里面的cookie信息
+    curl -D cookied.txt http://www.linux.com   保存http的response里面的header信息
+    curl -b cookiec.txt http://www.linux.com   读取cookie给网址
+    curl -A "Mozilla/4.0(compatible;MSIE 8.0; Windows NT5.0)" http://www.linux.com   模仿浏览器访问网址
+    curl -e "www.linux.com" http://mail.linux.com     伪造referer (前置网址)
+    curl -o do1.jpg http://www.linux.com/do1.jpg      下载文件
+    curl -O http://www.linux.com/do1.jpg              下载文件
+    curl -O http://www.linux.com/do[1-5].jpg          循环下载
+    curl -O http://www.linux.com/{hello,bb}/do[1-5].jpg 下载文件变成hello_do1.jpg ...
+ 
+# 使用SHA算法加密日期，输出32个字符
+date +%s |sha256sum |base64 |head -c 32 ;echo
+
+# 使用openssl的随机函数
+openssl rand -base64 32
+
+# 使用日期生成随机字符串
+date | md5sum
+date | base64
+
+# 返回公网IP
+curl ip.6655.com/ip.aspx
+
+# find的使用
+-exec 对匹配的文件执行所给出的其他linux命令
+-name 按照文件名查找
+-perm 按照文件权限查找
+-user 按照文件属主查找
+-group 按照文件所属组查找
+-mtime 按照文件更改时间查找
+-atime 最后访问时间
+-ctime 最后修改时间 
+-type 查找某一类型文件
+      b 块设备文件   d 目录   p 管道文件   l 符号链接文件  f 普通文件    s socket文件
+-size 查找文件长度为n块的文件
+-depth 查找包括子目录
+-maxdepth 查找最大目录层数
+-print 将输出以标准输出上
+
+find / -size +1000c  查找大于1000字节的文件     c字节  w双字  k:KB  M:MB  G:GB
+find / -size -1000k  查找小于1000KB的文件
+find / -atime -2  查找系统中最后2天访问的文件
+find / -atime -10 查找系统中最后10分钟访问的文件
+find / -empty    查找系统中为空的文件或者文件夹
+find / -size +1000c -and -mtime +2    查找大于1000字节，在最后2分钟内修改的文件
+find . type f -size +100M | xargs du -shm | sort -nr 查找大于100M的文件，并按大小列表
+-iname 忽略字母大小写
+! 否定参数
+find . ! -name "*.txt" -print    匹配所有不以.txt结尾的文件
+-maxdepth 最大深度
+-mindepth 最小深度
+-newer 查找比指定文件更新的文件
+find . -type f -newer file.txt  在当前目录查找比file.txt修改时间更长的所有文件
+-delete 删除查找到的匹配文件
+
+# 目录操作
+
+# 递归创建目录
+mkdir -p {dirname}
+# 目录压栈并进入新目录
+pushd {dirname}
+# 弹出并进入栈顶的目录
+popd
+# 列出当前目录栈
+dirs -v
+# 回到之前的目录
+cd -
+
+# 变量操作
+
+# 查看当前 shell 的进程号
+echo $$
+# 查看最近调用的后台任务进程号
+echo $!
+# 查看最近一条命令的返回码
+echo $?
+# 代表第一个参数，$N 代表第 N 个参数
+echo $1 
+# 代表参数个数
+echo $# 
+# 代表被调用者自身的名字
+echo $0 
+# 代表所有参数，类型是个数组，想传递所有参数给其他命令用 cmd "$@" 
+echo $@ 
+# 空格链接起来的所有参数，类型是字符串
+echo $* 

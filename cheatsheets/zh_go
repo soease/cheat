@@ -1,0 +1,22 @@
+# Go是Google公司免费开源的程序语言,而且go是管理源代码的工具.
+
+# 下载并安装包
+go get package_path
+
+# 编译并运行源文件(它必须包含一个main包)
+go run file.go
+
+# 编译当前目录存在的包
+go build
+
+# 执行当前包的所有测试实例(文件名必须_test.go结尾)
+go test
+
+# 编译并安装当前包
+go install
+
+# 参阅:
+#   Go语言小抄在 /go/
+#   包列表:      /go/:list
+#   学习Go:      /go/:learn
+#   在包中搜索:  /go/~keyword

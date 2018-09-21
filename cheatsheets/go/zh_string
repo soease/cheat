@@ -1,0 +1,49 @@
+# 字符串比较
+if strings.Compare(str01, str02)==0 {
+   fmt.Println("相等")
+}
+
+# 查找包含
+var isCon bool = strings.Contains(str01, "hello")
+
+# 查找位置，不存在返回-1
+var theIndex int = strings.Index(str01, ",")
+
+# 字符串出现次数
+strings.Count("cheeseeee", "ee")
+
+# 字符串重复
+strings.Repeat("world ", 10)
+
+# 字符串替换，-1表示全部替换
+strings.Replace(str, "/", "**", 4)
+
+# 删除字符串两头的符号
+strings.Trim(str, "/")
+
+# 删除字符串左或右的符号
+strings.TrimLeft(str, "/")
+strings.TrimRight(str, "/")
+
+# 删除字符串两头的空格
+strings.TrimSpace(str)
+
+# 单词首字母大写
+strings.Title(str)
+
+# 所有字符大写/小写
+strings.ToLower(str)
+strings.ToUpper(str)
+
+# 是否为前缀/后缀字符
+strings.HasPrefix("Gopher", "Go")
+strings.HasSuffix("Amigo", "go")
+
+# 根据空格分割字符串
+strings.Fields(str)
+
+# 根据指定符号分割字符串
+strings.Split(str,",")
+
+# 根据指定符号合并字符串
+strings.Join(slece,",")

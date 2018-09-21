@@ -1,0 +1,13 @@
+# 这里记录的是个人备忘
+
+# 文件目录及可执行文件标识
+ls -F
+
+# 递归列表
+ls -R
+
+# 当前目录中查找文件，不包括某类型
+find . -maxdepth 1 -name "*.go" ! -name "*_test.go"
+
+# 查询文件并复制到指定目录
+find . -maxdepth 1 -name "*.go" ! -name "*_test.go" | xargs -i cp {} /tmp

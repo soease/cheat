@@ -1,0 +1,21 @@
+# 开始新的命名屏幕会话
+screen -S session_name
+
+# 从当前会话中分离
+Press Ctrl+A then press d
+
+# 重新恢复会话:
+screen -r session_name
+
+# 列出所有会话:
+screen -ls
+
+# 会话共享
+screen -x
+
+# 启动一个开始就断开的会话，会话名称为test.
+# 所有屏幕输出都会记录到screenlog.0文件
+scrreen -L -dmS test
+
+# 热键
+ctrl+a d (按ctrl不放，分别按a和d)

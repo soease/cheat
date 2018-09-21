@@ -1,0 +1,19 @@
+# 指定时间执行一次任务
+at {time}
+{command 0}
+{command 1}
+Ctrl-d
+
+# {time} 可以是任何一个
+now | midnight | noon | teatime (4pm)
+HH:MM
+now + N {minutes | hours | days | weeks}
+MM/DD/YY
+
+# 未执行的任务列表
+atq
+at -l
+
+# 移除一个任务(使用atq中的id)
+atrm {id}
+at -d

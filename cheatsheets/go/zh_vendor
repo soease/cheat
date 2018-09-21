@@ -1,0 +1,9 @@
+# 下载vendor包
+go get -u github.com/kardianos/govendor
+
+# go build 生成govendor文件
+
+# 执行 ./govendor init生成vendor目录
+
+# 执行  ./vendor add +external 导入依赖包
+govendor add +e

@@ -1,0 +1,10 @@
+#为了简化操作，添加的别名
+alias disk='df -lh'
+alias gb='go build -ldflags "-s -w"'
+alias l='ls -lhpSF --color=auto'
+alias ll='ls -alF'
+alias ssh_dg='ssh ease@dgong.net'
+alias ssh_pi='ssh pi@192.168.100.4'
+alias update='sudo apt update -y'
+alias upgrade='sudo apt upgrade -y'
+
